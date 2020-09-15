@@ -14,15 +14,17 @@ resource "openstack_networking_secgroup_v2" "user_security_group" {
   description = "Security group for ${var.username}"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_22" {
-  direction         = "ingress"
-  ethertype         = "IPv4"
-  protocol          = "tcp"
-  port_range_min    = 22
-  port_range_max    = 22
-  remote_ip_prefix  = "0.0.0.0/0"
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rules" {
+  for_each          = {for port_rule in var.port_rules: port_rule.name => port_rule}
+  direction         = each.value.direction
+  ethertype         = each.value.ethertype
+  protocol          = each.value.protocol
+  port_range_min    = each.value.port_range_min
+  port_range_max    = each.value.port_range_max
+  remote_ip_prefix  = each.value.remote_ip_prefix
   security_group_id = openstack_networking_secgroup_v2.user_security_group.id
 }
+
 resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_icmp" {
   direction         = "ingress"
   ethertype         = "IPv4"
