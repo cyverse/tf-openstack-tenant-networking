@@ -55,3 +55,16 @@ resource "openstack_networking_router_interface_v2" "user_router_interface" {
   router_id = openstack_networking_router_v2.user_router.id
   subnet_id = openstack_networking_subnet_v2.user_subnet.id
 }
+
+output "network_uuid" {
+  value = openstack_networking_network_v2.user_network.id
+}
+output "subnet_uuid" {
+  value = openstack_networking_subnet_v2.user_subnet.id
+}
+output "router_uuid" {
+  value = openstack_networking_router_v2.user_router.id
+}
+output "secgroup_uuid" {
+  value = openstack_networking_secgroup_v2.user_security_group.id
+}
