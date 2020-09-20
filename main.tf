@@ -69,5 +69,5 @@ output "secgroup_uuid" {
   value = openstack_networking_secgroup_v2.user_security_group.id
 }
 output "external_subnet_uuid" {
-  value = openstack_networking_router_v2.user_router.external_fixed_ip.subnet_id
+  value = openstack_networking_router_v2.user_router.external_fixed_ip[0].subnet_id
 }
